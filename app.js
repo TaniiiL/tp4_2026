@@ -10,14 +10,27 @@ const result = await client.query("SELECT * FROM usuario order by id")
 console.log(result.rows)
 const usuario1 = result.rows[0].nombre
 console.log("usuario1:",usuario1)
-
 await client.end()
+
+app.post('/createuser', async (req, res) => {
+  const user = req.body;
+  if (!user.nombre || !user.userid || !user.password) {
+    return res.status(400) .json ({message: "Debe completar todos los campos"});
+
+    try {}
+    
+  }
+
+app.post('/login', async (req, res) => {
+  const user = req.body;
+  if (!user.userid || !user.password) 
+})
 
 const app = express()
 const port = 3000;
 app.get('/',(req,res)=>res.send("Welcome " + usuario1 ))
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Local en http://localhost:${PORT}`);
-});
+//app.listen(PORT, () => {
+ // console.log(`Local en http://localhost:${PORT}`);
+//});
 export default app;
