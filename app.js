@@ -6,10 +6,14 @@ const {Client} = pkg;
 const client = new Client(dbconfig)
 await client.connect()
 
-
+const app = express()
+app.use(express.json())
+const port = 3000;
 
 app.post('/createuser', async (req, res) => {
   const user = req.body;
+
+  console.log("nombre", user)
 
   if (!user.nombre || !user.userid || !user.password) {
     return res.status(400).json({
@@ -29,6 +33,9 @@ app.post('/createuser', async (req, res) => {
       'INSERT INTO usuario VALUES ($1, $2, $3) RETURNING *',
       [user.userid, user.nombre, user.password]
     );
+
+
+
 
     await client.end();
 
@@ -72,7 +79,7 @@ app.post('/login', async (req, res) => {
         username:user.username
       }
       const secret ='dfkjwedfdj'
-      const token = jwt.sign....
+      const token = jwt.sign
 
       res.send( token );
     } else {
@@ -81,17 +88,22 @@ app.post('/login', async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
+
     });
 
 app.post('/escucha', async (req, res) => {
-
+    try {
+      payloadOriginal = await jwt.verify(token, secret);
+    }
+    catch{
+      console.log("ERROR")
+    }
 })
 
-const app = express()
-const port = 3000;
+
 app.get('/',(req,res)=>res.send("Welcome " + usuario1 ))
 const PORT = process.env.PORT || 3000;
-//app.listen(PORT, () => {
- // console.log(`Local en http://localhost:${PORT}`);
-//});
+app.listen(PORT, () => {
+ console.log(`Local en http://localhost:${PORT}`);
+});
 export default app;
